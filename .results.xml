@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="12" name="pytest" skips="0" tests="12" time="0.138"><testcase classname="pytests.test_index" file="pytests/test_index.py" line="10" name="test_create_table" time="0.001268148422241211"><failure message="TypeError: &apos;NoneType&apos; object is not subscriptable">def test_create_table():
+        sql_runner = SQLRunner()
+        table = sql_runner.execute_create_file()
+&gt;       planets = table.execute(&quot;SELECT name FROM sqlite_master WHERE type=&apos;table&apos;;&quot;).fetchone()[0]
+E       TypeError: &apos;NoneType&apos; object is not subscriptable
+
+pytests/test_index.py:14: TypeError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="35" name="test_alter_table" time="0.0010437965393066406"><failure message="TypeError: &apos;NoneType&apos; object is not subscriptable">def test_alter_table():
+        sql_runner = SQLRunner()
+        altered_table = sql_runner.execute_alter_file()
+&gt;       planets = altered_table.execute(&quot;SELECT name FROM sqlite_master WHERE type=&apos;table&apos;;&quot;).fetchone()[0]
+E       TypeError: &apos;NoneType&apos; object is not subscriptable
+
+pytests/test_index.py:39: TypeError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="44" name="test_insert_into" time="0.0009315013885498047"><failure message="sqlite3.OperationalError: no such table: planets">def test_insert_into():
+        sql_runner = SQLRunner()
+        table = sql_runner.execute_alter_file()
+        table_values = sql_runner.execute_insert_file()
+&gt;       test = table_values.execute(&quot;SELECT * FROM planets&quot;).fetchall()
+E       sqlite3.OperationalError: no such table: planets
+
+pytests/test_index.py:49: OperationalError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="52" name="test_update_jupiter" time="0.0008981227874755859"><failure message="sqlite3.OperationalError: no such table: planets">def test_update_jupiter():
+        sql_runner = SQLRunner()
+        table = sql_runner.execute_alter_file()
+        table_values = sql_runner.execute_insert_file()
+        update = sql_runner.execute_update_file()
+        result = 68
+    
+&gt;       assert table_values.execute(&quot;SELECT num_of_moons FROM planets WHERE name = &apos;Jupiter&apos;;&quot;).fetchone()[0] == result
+E       sqlite3.OperationalError: no such table: planets
+
+pytests/test_index.py:60: OperationalError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="61" name="test_delete_from" time="0.0009424686431884766"><failure message="sqlite3.OperationalError: no such table: planets">def test_delete_from():
+        sql_runner = SQLRunner()
+        table = sql_runner.execute_alter_file()
+        table_values = sql_runner.execute_insert_file()
+        deletion = sql_runner.execute_delete_file()
+&gt;       test_delete = deletion.execute(&quot;SELECT * FROM planets&quot;).fetchall()
+E       sqlite3.OperationalError: no such table: planets
+
+pytests/test_index.py:67: OperationalError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="71" name="test_select_all_columns_and_rows" time="0.0022118091583251953"><failure message="AssertionError: assert [] == [(1, &apos;Mercury&apos;, &apos;gray&apos;, 0, 0...azel&apos;, 62, 95.19, 1.0), ...]
+  Right contains more items, first extra item: (1, &apos;Mercury&apos;, &apos;gray&apos;, 0, 0.55, 0.0)
+  Use -v to get the full diff">def test_select_all_columns_and_rows():
+        result = [(1, &apos;Mercury&apos;, &apos;gray&apos;, 0, 0.55, 0.0), (2, &apos;Venus&apos;, &apos;yellow&apos;, 0, 0.82, 0.0), (3, &apos;Earth&apos;, &apos;blue&apos;, 1, 1.0, 0.0), (4, &apos;Mars&apos;, &apos;red&apos;, 2, 0.11, 0.0), (5, &apos;Jupiter&apos;, &apos;orange&apos;, 67, 317.9, 0.0), (6, &apos;Saturn&apos;, &apos;hazel&apos;, 62, 95.19, 1.0), (7, &apos;Uranus&apos;, &apos;light blue&apos;, 27, 14.54, 1.0), (8, &apos;Neptune&apos;, &apos;dark blue&apos;, 14, 17.15, 1.0)]
+&gt;       assert table_select.execute(select_all_columns_and_rows()).fetchall() == result
+E       AssertionError: assert [] == [(1, &apos;Mercury&apos;, &apos;gray&apos;, 0, 0...azel&apos;, 62, 95.19, 1.0), ...]
+E         Right contains more items, first extra item: (1, &apos;Mercury&apos;, &apos;gray&apos;, 0, 0.55, 0.0)
+E         Use -v to get the full diff
+
+pytests/test_index.py:74: AssertionError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="75" name="test_select_name_and_color_of_all_planets" time="0.0010645389556884766"><failure message="AssertionError: assert [] == [(&apos;Mercury&apos;, &apos;gray&apos;), (&apos;Venu...), (&apos;Saturn&apos;, &apos;hazel&apos;), ...]
+  Right contains more items, first extra item: (&apos;Mercury&apos;, &apos;gray&apos;)
+  Use -v to get the full diff">def test_select_name_and_color_of_all_planets():
+        result = [(&apos;Mercury&apos;, &apos;gray&apos;), (&apos;Venus&apos;, &apos;yellow&apos;), (&apos;Earth&apos;, &apos;blue&apos;), (&apos;Mars&apos;, &apos;red&apos;), (&apos;Jupiter&apos;, &apos;orange&apos;), (&apos;Saturn&apos;, &apos;hazel&apos;), (&apos;Uranus&apos;, &apos;light blue&apos;), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+&gt;       assert table_select.execute(select_name_and_color_of_all_planets()).fetchall() == result
+E       AssertionError: assert [] == [(&apos;Mercury&apos;, &apos;gray&apos;), (&apos;Venu...), (&apos;Saturn&apos;, &apos;hazel&apos;), ...]
+E         Right contains more items, first extra item: (&apos;Mercury&apos;, &apos;gray&apos;)
+E         Use -v to get the full diff
+
+pytests/test_index.py:78: AssertionError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="79" name="test_select_all_planets_with_mass_greater_than_one" time="0.0010268688201904297"><failure message="AssertionError: assert [] == [(5, &apos;Jupiter&apos;, &apos;orange&apos;, 67...dark blue&apos;, 14, 17.15, 1.0)]
+  Right contains more items, first extra item: (5, &apos;Jupiter&apos;, &apos;orange&apos;, 67, 317.9, 0.0)
+  Use -v to get the full diff">def test_select_all_planets_with_mass_greater_than_one():
+        result = [(5, &apos;Jupiter&apos;, &apos;orange&apos;, 67, 317.9, 0.0), (6, &apos;Saturn&apos;, &apos;hazel&apos;, 62, 95.19, 1.0), (7, &apos;Uranus&apos;, &apos;light blue&apos;, 27, 14.54, 1.0), (8, &apos;Neptune&apos;, &apos;dark blue&apos;, 14, 17.15, 1.0)]
+&gt;       assert table_select.execute(select_all_planets_with_mass_greater_than_one()).fetchall() == result
+E       AssertionError: assert [] == [(5, &apos;Jupiter&apos;, &apos;orange&apos;, 67...dark blue&apos;, 14, 17.15, 1.0)]
+E         Right contains more items, first extra item: (5, &apos;Jupiter&apos;, &apos;orange&apos;, 67, 317.9, 0.0)
+E         Use -v to get the full diff
+
+pytests/test_index.py:82: AssertionError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="83" name="test_select_name_and_mass_of_planets_with_mass_less_than_equal_to_one" time="0.0009057521820068359"><failure message="AssertionError: assert [] == [(&apos;Mercury&apos;, 0.55), (&apos;Venus&apos;...arth&apos;, 1.0), (&apos;Mars&apos;, 0.11)]
+  Right contains more items, first extra item: (&apos;Mercury&apos;, 0.55)
+  Use -v to get the full diff">def test_select_name_and_mass_of_planets_with_mass_less_than_equal_to_one():
+        result = [(&apos;Mercury&apos;, 0.55), (&apos;Venus&apos;, 0.82), (&apos;Earth&apos;, 1.0), (&apos;Mars&apos;, 0.11)]
+&gt;       assert table_select.execute(select_name_and_mass_of_planets_with_mass_less_than_equal_to_one()).fetchall() == result
+E       AssertionError: assert [] == [(&apos;Mercury&apos;, 0.55), (&apos;Venus&apos;...arth&apos;, 1.0), (&apos;Mars&apos;, 0.11)]
+E         Right contains more items, first extra item: (&apos;Mercury&apos;, 0.55)
+E         Use -v to get the full diff
+
+pytests/test_index.py:86: AssertionError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="87" name="test_select_name_and_color_of_planets_with_more_than_10_moons" time="0.0009126663208007812"><failure message="AssertionError: assert [] == [(&apos;Jupiter&apos;, &apos;orange&apos;), (&apos;Sa...), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+  Right contains more items, first extra item: (&apos;Jupiter&apos;, &apos;orange&apos;)
+  Use -v to get the full diff">def test_select_name_and_color_of_planets_with_more_than_10_moons():
+        result = [(&apos;Jupiter&apos;, &apos;orange&apos;), (&apos;Saturn&apos;, &apos;hazel&apos;), (&apos;Uranus&apos;, &apos;light blue&apos;), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+&gt;       assert table_select.execute(select_name_and_color_of_planets_with_more_than_10_moons()).fetchall() == result
+E       AssertionError: assert [] == [(&apos;Jupiter&apos;, &apos;orange&apos;), (&apos;Sa...), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+E         Right contains more items, first extra item: (&apos;Jupiter&apos;, &apos;orange&apos;)
+E         Use -v to get the full diff
+
+pytests/test_index.py:90: AssertionError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="91" name="test_select_all_planets_with_moons_and_mass_less_than_one" time="0.0010085105895996094"><failure message="AssertionError: assert [] == [(4, &apos;Mars&apos;, &apos;red&apos;, 2, 0.11, 0.0)]
+  Right contains more items, first extra item: (4, &apos;Mars&apos;, &apos;red&apos;, 2, 0.11, 0.0)
+  Use -v to get the full diff">def test_select_all_planets_with_moons_and_mass_less_than_one():
+        result = [(4, &apos;Mars&apos;, &apos;red&apos;, 2, 0.11, 0.0)]
+&gt;       assert table_select.execute(select_all_planets_with_moons_and_mass_less_than_one()).fetchall() == result
+E       AssertionError: assert [] == [(4, &apos;Mars&apos;, &apos;red&apos;, 2, 0.11, 0.0)]
+E         Right contains more items, first extra item: (4, &apos;Mars&apos;, &apos;red&apos;, 2, 0.11, 0.0)
+E         Use -v to get the full diff
+
+pytests/test_index.py:94: AssertionError</failure></testcase><testcase classname="pytests.test_index" file="pytests/test_index.py" line="95" name="test_select_name_and_color_of_all_blue_planets" time="0.0009303092956542969"><failure message="AssertionError: assert [] == [(&apos;Earth&apos;, &apos;blue&apos;), (&apos;Uranus...), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+  Right contains more items, first extra item: (&apos;Earth&apos;, &apos;blue&apos;)
+  Use -v to get the full diff">def test_select_name_and_color_of_all_blue_planets():
+        result = [(&apos;Earth&apos;, &apos;blue&apos;), (&apos;Uranus&apos;, &apos;light blue&apos;), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+&gt;       assert table_select.execute(select_name_and_color_of_all_blue_planets()).fetchall() == result
+E       AssertionError: assert [] == [(&apos;Earth&apos;, &apos;blue&apos;), (&apos;Uranus...), (&apos;Neptune&apos;, &apos;dark blue&apos;)]
+E         Right contains more items, first extra item: (&apos;Earth&apos;, &apos;blue&apos;)
+E         Use -v to get the full diff
+
+pytests/test_index.py:98: AssertionError</failure></testcase></testsuite>
